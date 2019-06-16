@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ListItem from "@/components/listItem";
+import ListItem from "../components/ListItem";
 export default {
   name: "ProjectList",
   components: {
