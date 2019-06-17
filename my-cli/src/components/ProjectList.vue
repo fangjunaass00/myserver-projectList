@@ -148,6 +148,28 @@ export default {
                 "user/herdsric/tomcate-8010/webapps/hugoboss_father",
               statistics: "迪奥游戏"
             }
+          },
+          {
+            company: "dior",
+            style:
+              "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
+            createDate: "2018-08-01",
+
+            title: "Prestige Cushion",
+            other: "迪奥上线",
+            cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
+            serverdata: {
+              testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
+              testServer: "47.100.119.73",
+              testServerPath:
+                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
+              officalLink:
+                "http://diorpst.herdsric.com/dior-flower-rose/index.do",
+              officalServer: "47.100.4.192",
+              officalServerPath:
+                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
+              statistics: "迪奥游戏"
+            }
           }
         ]
       }
