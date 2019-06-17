@@ -1,53 +1,122 @@
 <template>
-  <div>
-    <div class="item-name" v-bind:style="itemdata.style">项目名：{{itemdata.title}}</div>
-    <div class="hide-message">
-      <div class="item-create-date" v-bind:style="itemdata.style">上线日期：{{itemdata.createDate}}</div>
-      <div
-        class="item-serverdata-cdnurl"
-        v-bind:style="itemdata.style"
-      >cdn地址：{{itemdata.serverdata.cdnurl}}</div>
-      <div class="item-other" v-bind:style="itemdata.style">其他信息：{{itemdata.other}}</div>
-      <div
-        class="item-serverdata-statistics"
-        v-bind:style="itemdata.style"
-      >百度统计：{{itemdata.serverdata.statistics}}</div>
-    </div>
-    <div class="server-part-offical">
-      <div
-        class="item-serverdata-officalLink"
-        v-bind:style="itemdata.style"
-      >正式链接： {{itemdata.serverdata.officalLink}}</div>
-      <div
-        class="item-serverdata-officalServer"
-        v-bind:style="itemdata.style"
-      >正式服务器ip：{{itemdata.serverdata.officalServer}}</div>
-      <div
-        class="item-serverdata-officalServerPath"
-        v-bind:style="itemdata.style"
-      >正式文件存放路径：{{itemdata.serverdata.officalServerPath}}</div>
-    </div>
-    <div class="server-part-test">
-      <div
-        class="item-serverdata-testlink"
-        v-bind:style="itemdata.style"
-      >测试链接：{{itemdata.serverdata.testLink}}</div>
-      <div
-        class="item-serverdata-testServer"
-        v-bind:style="itemdata.style"
-      >测试服务器ip：{{itemdata.serverdata.testServer}}</div>
-      <div
-        class="item-serverdata-testServerPath"
-        v-bind:style="itemdata.style"
-      >测试文件存放路径{{itemdata.serverdata.testServerPath}}</div>
-    </div>
+  <div class="flex-item">
+    <list-item-block
+      v-for="item in renderList"
+      v-bind:key="item.name"
+      class="item-block"
+      v-bind:itemdata="item"
+      v-bind:itemname="item.name"
+      v-bind:settingparameter="setting"
+      v-bind:style="listData.style"
+      @changevalue="changevalue"
+    ></list-item-block>
   </div>
 </template>
 
 <script>
+import ListItemBlock from "@/components/ListItemBlock";
 export default {
+  data: function() {
+    return {
+      listData: null,
+      setting: this.settingparameter
+    };
+  },
+  created: function() {
+    var getData = {
+      company: "dior",
+      style:
+        "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;line-height: 50px;",
+      renderEle: [
+        { name: "title", value: this.itemdata.title, size: 2, showEle: true },
+        {
+          name: "createDate",
+          value: this.itemdata.createDate,
+          size: 1,
+          showEle: true
+        },
+        { name: "cdnurl", value: this.itemdata.cdnurl, size: 1, showEle: true },
+        { name: "other", value: this.itemdata.other, size: 1, showEle: true },
+        {
+          name: "statistics",
+          value: this.itemdata.serverdata.statistics,
+          size: 1,
+          showEle: true
+        },
+        {
+          name: "officalLink",
+          value: this.itemdata.serverdata.officalLink,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "officalServer",
+          value: this.itemdata.serverdata.officalServer,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "officalServerPath",
+          value: this.itemdata.serverdata.officalServerPath,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "testLink",
+          value: this.itemdata.serverdata.testLink,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "testServer",
+          value: this.itemdata.serverdata.testServer,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "testServerPath",
+          value: this.itemdata.serverdata.testServerPath,
+          size: 2,
+          showEle: true
+        }
+      ]
+    };
+
+    console.log(getData.renderEle);
+    this.listData = getData;
+  },
   name: "ListItem",
-  props: ["itemdata"]
+  props: ["itemdata", "settingparameter"],
+  components: {
+    "list-item-block": ListItemBlock
+  },
+  computed: {
+    renderList: function(arr) {
+      var that = this;
+      return this.listData.renderEle.filter(function(item) {
+        var inlist = false;
+        console.log(that.settingparameter.showList);
+        that.settingparameter.showList.forEach(function(name) {
+          if (item.name == name) {
+            inlist = true;
+          }
+        });
+        return inlist;
+      });
+    }
+  },
+  methods: {
+    changevalue: function(data) {
+      console.log(data);
+      // this.listData.item[data.name] = data.data;
+      this.listData.renderEle.forEach(element => {
+        if (element.name == data.name) {
+          element.value = data.value;
+        }
+      });
+      console.log(this.item);
+    }
+  }
 };
 </script>
 
@@ -56,6 +125,11 @@ export default {
   text-align: left;
   margin: 0;
   padding: 0;
+}
+.flex-item {
+  display: flex;
+  /* flex-grow: 1; */
+  flex-wrap: wrap;
 }
 .item-name {
   width: 95%;
@@ -87,11 +161,11 @@ export default {
   width: 50%;
   height: 50px;
 }
-.hide-message div {
+/* .hide-message div {
   width: 45%;
   height: 50px;
   padding-left: 5%;
-}
+} */
 .hide-message .item-create-date {
   width: 30%;
   height: 50px;
