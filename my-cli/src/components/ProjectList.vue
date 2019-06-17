@@ -15,9 +15,10 @@
       ></show-hide-ele>
     </div>
     <div class="project-title">项目列表</div>
+    <company-list :datalist="filedata.list" v-bind:settingparameter="settingParameter"></company-list>
     <list-item
       v-for="item in filedata.list"
-      v-bind:key="item.title"
+      v-bind:key="item.id"
       v-bind:settingparameter="settingParameter"
       v-bind:itemdata="item"
     ></list-item>
@@ -26,12 +27,15 @@
 
 <script>
 import ListItem from "../components/ListItem";
+import CompanyList from "../components/CompanyList";
+
 import ShowHideEle from "../components/ShowHideEle";
 export default {
   name: "ProjectList",
   components: {
     "list-item": ListItem,
-    "show-hide-ele": ShowHideEle
+    "show-hide-ele": ShowHideEle,
+    "company-list": CompanyList
   },
   created: function() {
     this.renderShowList();
@@ -128,6 +132,7 @@ export default {
         title: "update",
         list: [
           {
+            id: 0,
             company: "dior",
             style:
               "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
@@ -151,6 +156,30 @@ export default {
           },
           {
             company: "dior",
+            id: 1,
+            style:
+              "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
+            createDate: "2018-08-01",
+
+            title: "Prestige Cushion",
+            other: "迪奥上线",
+            cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
+            serverdata: {
+              testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
+              testServer: "47.100.119.73",
+              testServerPath:
+                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
+              officalLink:
+                "http://diorpst.herdsric.com/dior-flower-rose/index.do",
+              officalServer: "47.100.4.192",
+              officalServerPath:
+                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
+              statistics: "迪奥游戏"
+            }
+          },
+          {
+            company: "hugoboss",
+            id: 2,
             style:
               "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
             createDate: "2018-08-01",
