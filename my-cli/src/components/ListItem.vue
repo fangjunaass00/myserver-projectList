@@ -81,8 +81,6 @@ export default {
         }
       ]
     };
-
-    console.log(getData.renderEle);
     this.listData = getData;
   },
   name: "ListItem",
@@ -95,7 +93,6 @@ export default {
       var that = this;
       return this.listData.renderEle.filter(function(item) {
         var inlist = false;
-        console.log(that.settingparameter.showList);
         that.settingparameter.showList.forEach(function(name) {
           if (item.name == name) {
             inlist = true;
@@ -107,14 +104,12 @@ export default {
   },
   methods: {
     changevalue: function(data) {
-      console.log(data);
       // this.listData.item[data.name] = data.data;
       this.listData.renderEle.forEach(element => {
         if (element.name == data.name) {
           element.value = data.value;
         }
       });
-      console.log(this.item);
     }
   }
 };

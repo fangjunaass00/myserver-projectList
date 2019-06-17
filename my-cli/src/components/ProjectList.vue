@@ -1,12 +1,19 @@
 <template>
   <div class="project">
     <div @click="switchMode">模式{{dataCanSet?"编辑模式":"预览模式"}}</div>
-    <div class="hide-block">
-      <input type="checkbox" @change="hideAll">全部隐藏
+    <div class="hide-block-btn">
+      <div
+        class="switch-showpart-btn"
+        v-for="item in showAndHideBtn"
+        v-bind:key="item.id"
+        @click="changePartShowOrHide(item)"
+        v-bind:class="{'btnActive':clickedPartId==item.id}"
+      >{{item.name}}</div>
+      <!-- <input type="checkbox" @change="hideAll">全部隐藏
       <input type="checkbox" @change="hideSome">局部隐藏
-      <input type="checkbox" @change="hideNone">不隐藏
+      <input type="checkbox" @change="hideNone">不隐藏-->
     </div>
-    <div class="hide-block">
+    <div class="hide-block-check">
       <show-hide-ele
         @switchChecked="showAndHide"
         v-bind:key="item.id"
@@ -16,12 +23,6 @@
     </div>
     <div class="project-title">项目列表</div>
     <company-list :datalist="filedata.list" v-bind:settingparameter="settingParameter"></company-list>
-    <list-item
-      v-for="item in filedata.list"
-      v-bind:key="item.id"
-      v-bind:settingparameter="settingParameter"
-      v-bind:itemdata="item"
-    ></list-item>
   </div>
 </template>
 
@@ -54,7 +55,6 @@ export default {
       this.settingParameter.showSetting = this.dataCanSet;
     },
     showAndHide(data) {
-      console.log(data);
       this.showAndHIdeList.forEach(function(item) {
         if (data.name == item.name) {
           item.show = data.value;
@@ -72,19 +72,21 @@ export default {
       });
       this.settingParameter.showList = arr;
     },
-    hideAll: function() {
-      var allowArr = ["title"];
-      this.hideAnyPart(allowArr);
-    },
-    hideSome: function() {
-      var allowArr = ["title", "officalLink"];
-      this.hideAnyPart(allowArr);
-    },
-    hideNone: function() {
-      var allowArr = ["all"];
+    changePartShowOrHide: function(item) {
+      this.clickedPartId = item.id;
+      var allowArr;
+      if (item.id == 0) {
+        allowArr = ["all"];
+      } else if (item.id == 1) {
+        allowArr = ["title", "officalLink"];
+      } else if (item.id == 2) {
+        allowArr = ["title"];
+      }
+
       this.hideAnyPart(allowArr);
     },
     hideAnyPart: function(allowArr) {
+      console.log(allowArr);
       if (allowArr[0] == "all") {
         this.showAndHIdeList.forEach(function(item) {
           item.show = true;
@@ -115,6 +117,11 @@ export default {
         showSetting: false,
         showList: []
       },
+      showAndHideBtn: [
+        { id: 0, name: "全部显示" },
+        { id: 1, name: "局部显示" },
+        { id: 2, name: "全部隐藏" }
+      ],
       showAndHIdeList: [
         { id: 0, name: "title", show: true },
         { id: 1, name: "createDate", show: true },
@@ -128,6 +135,8 @@ export default {
         { id: 9, name: "officalServer", show: true },
         { id: 10, name: "officalServerPath", show: true }
       ],
+      clickedPartId: 0,
+
       filedata: {
         title: "update",
         list: [
@@ -207,4 +216,30 @@ export default {
   }
 };
 </script>
+
+<style>
+.hide-block-btn {
+  width: 300px;
+  display: flex;
+  font-size: 15px;
+}
+.switch-showpart-btn {
+  width: 100px;
+  height: 50px;
+  background: #2eb8cf;
+  color: #e1e6eb;
+  text-align: center;
+  line-height: 50px;
+}
+.btnActive {
+  background: #e1e6eb;
+  color: #2eb8cf;
+}
+.hide-block-check {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+</style>
+
 

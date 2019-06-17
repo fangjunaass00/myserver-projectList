@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     changeEvent(e) {
-      console.log(e.target.value);
       this.$emit("changevalue", { name: this.itemname, value: e.target.value });
     }
   },
@@ -67,7 +66,6 @@ export default {
           blockName = "正式文件存放地址";
           break;
       }
-      console.log(this.itemname);
       return blockName + "：" + this.itemdata.value;
     }
   },
