@@ -140,6 +140,7 @@ export default {
 
             title: "Prestige Cushion",
             other: "迪奥上线",
+            svnurl: "",
             cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
             serverdata: {
               testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
