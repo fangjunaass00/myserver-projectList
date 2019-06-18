@@ -1,6 +1,12 @@
 <template>
   <div class="project">
-    <div @click="switchMode">模式{{settingParameter.dataCanSet?"编辑模式":"预览模式"}}</div>
+    <transition name="fade2">
+      <div class="mode-item" v-show="!settingParameter.dataCanSet" @click="switchMode">预览模式</div>
+    </transition>
+    <transition name="fade2">
+      <div class="mode-item" v-show="settingParameter.dataCanSet" @click="switchMode">编辑模式</div>
+    </transition>
+
     <div class="hide-block-btn">
       <div
         class="switch-showpart-btn"
@@ -10,6 +16,7 @@
         v-bind:class="{'btnActive':clickedPartId==item.id}"
       >{{item.name}}</div>
     </div>
+    <div class="blank"></div>
     <div class="hide-block-check">
       <show-hide-ele
         @switchChecked="showAndHide"
@@ -39,6 +46,7 @@ export default {
     "company-list": CompanyBlock
   },
   created: function() {
+    this.getJsonData();
     this.renderShowList();
   },
   methods: {
@@ -105,6 +113,23 @@ export default {
       }
 
       this.renderShowList();
+    },
+    getJsonData: function() {
+      console.log(this.filedata);
+      this.$axios({
+        url: "/getjson",
+        method: "GET",
+        params: {}
+      })
+        .then(res => {
+          console.log(res);
+          var postdata = res.data.data;
+          var jsonData = JSON.parse(postdata);
+          console.log(jsonData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     getSubmitData: function() {
       console.log(this.filedata);
@@ -270,22 +295,44 @@ export default {
 </script>
 
 <style>
+.mode-item {
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  left: 0;
+  top: 20px;
+  background: #2eb8cf;
+  color: #fff;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+  line-height: 50px;
+  transition: 0.5s;
+}
 .hide-block-btn {
-  width: 300px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   font-size: 15px;
+  justify-content: center;
 }
 .switch-showpart-btn {
   width: 100px;
   height: 50px;
-  background: #2eb8cf;
-  color: #e1e6eb;
+  background: #e1e6eb;
+  color: #2eb8cf;
   text-align: center;
   line-height: 50px;
 }
+.switch-showpart-btn:nth-child(1) {
+  border-radius: 10px 0 0 10px;
+}
+.switch-showpart-btn:nth-child(3) {
+  border-radius: 0 10px 10px 0;
+}
 .btnActive {
-  background: #e1e6eb;
-  color: #2eb8cf;
+  background: #2eb8cf;
+  color: #e1e6eb;
 }
 .hide-block-check {
   display: flex;
@@ -308,6 +355,11 @@ export default {
   transform: translateX(-50%);
 }
 
+.blank {
+  width: 100%;
+  height: 20px;
+}
+
 /* 以下是过渡class，并不是keyframe */
 .fade-enter-active,
 .fade-leave-active {
@@ -319,6 +371,26 @@ export default {
 .fade-leave-to {
   opacity: 0;
   height: 0;
+}
+
+.fade2-enter-active {
+  animation: fade2-in 0.5s;
+}
+
+.fade2-leave-active {
+  animation: fade2-in 0.5s reverse;
+}
+
+@keyframes fade2-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }
 </style>
 

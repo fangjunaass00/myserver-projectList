@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div class="company-name" @click="showOrHideList">公司名称：{{itemdata.name}}</div>
-    <div @click="addNewTips">添加</div>
+    <div class="company-name" @click="showOrHideList">
+      公司名称：{{itemdata.name}}
+      <div class="company-addbtn" @click.stop="addNewTips">添加</div>
+    </div>
     <!-- {{itemdata}} -->
     <transition-group name="fade">
       <list-item
@@ -55,5 +57,11 @@ export default {
   color: aliceblue;
   line-height: 50px;
   padding-left: 10%;
+  position: relative;
+}
+.company-addbtn {
+  position: absolute;
+  right: 5%;
+  top: 0;
 }
 </style>

@@ -18,12 +18,7 @@ export default {
   },
   created: function() {
     this.$axios
-      .get("/getjson", {
-        data: {
-          name: "卢宇峰",
-          age: 22
-        }
-      })
+      .get("/getjson", {})
       .then(res => {
         console.log(res);
       })
