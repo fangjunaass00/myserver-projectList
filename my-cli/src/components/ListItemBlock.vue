@@ -1,8 +1,14 @@
 <template>
   <!-- <div class="item-block"> -->
   <div :class="itemdata.size==2?'item-block':'item-block-half'">
-    <div class="slide-part" v-bind:class="{'div-block-animate':setting.showSetting}">
-      <div class="div-block">{{getName}}</div>
+    <div
+      class="slide-part"
+      v-bind:class="{'div-block-animate':settingparameter.dataCanSet,'div-title':itemdata.name=='title'}"
+    >
+      <div :class="itemdata.size==2?'div-block-name':'div-block-name-half'">
+        {{getName}}
+        <div class="delete" @click="deleteTips">删除</div>
+      </div>
       <div class="input-block">
         <input
           type="text"
@@ -19,19 +25,23 @@
 export default {
   name: "ListItemBlock",
   data: function() {
-    return {
-      setting: this.settingparameter
-    };
+    return {};
   },
   methods: {
     changeEvent(e) {
-      this.$emit("changevalue", { name: this.itemname, value: e.target.value });
+      this.$emit("changevalue", {
+        name: this.itemdata.name,
+        value: e.target.value
+      });
+    },
+    deleteTips: function() {
+      this.$emit("deleteTips");
     }
   },
   computed: {
     getName: function() {
       var blockName = "";
-      switch (this.itemname) {
+      switch (this.itemdata.name) {
         case "title":
           blockName = "项目名称";
           break;
@@ -65,6 +75,9 @@ export default {
         case "officalServerPath":
           blockName = "正式文件存放地址";
           break;
+        case "svnurl":
+          blockName = "svn地址";
+          break;
       }
       return blockName + "：" + this.itemdata.value;
     }
@@ -72,19 +85,19 @@ export default {
   filters: {
     namefilter: function(str) {}
   },
-  props: ["itemdata", "settingparameter", "itemname"]
+  props: ["itemdata", "settingparameter"]
 };
 </script>
 
 <style>
 .item-block {
-  width: 950%;
+  width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
 .item-block-half {
-  width: 45%;
+  width: 50%;
   height: 100%;
   overflow: hidden;
 }
@@ -93,8 +106,14 @@ export default {
   height: 200%;
   transition: 0.5s;
 }
-.div-block {
-  width: 100%;
+.div-block-name {
+  width: 95%;
+  padding-left: 5%;
+  height: 50%;
+}
+.div-block-name-half {
+  width: 90%;
+  padding-left: 10%;
   height: 50%;
 }
 
@@ -110,6 +129,17 @@ export default {
 .input-block-input {
   width: 95%;
   background: transparent;
+}
+
+.div-title {
+  background: yellow;
+  color: #000;
+}
+
+.delete {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
 

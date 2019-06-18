@@ -57,6 +57,9 @@ export default {
         case "officalServerPath":
           blockName = "正式文件存放地址";
           break;
+        case "svnurl":
+          blockName = "svn地址";
+          break;
       }
       return blockName;
     }

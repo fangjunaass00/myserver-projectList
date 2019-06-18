@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <div @click="switchMode">模式{{dataCanSet?"编辑模式":"预览模式"}}</div>
+    <div @click="switchMode">模式{{settingParameter.dataCanSet?"编辑模式":"预览模式"}}</div>
     <div class="hide-block-btn">
       <div
         class="switch-showpart-btn"
@@ -9,9 +9,6 @@
         @click="changePartShowOrHide(item)"
         v-bind:class="{'btnActive':clickedPartId==item.id}"
       >{{item.name}}</div>
-      <!-- <input type="checkbox" @change="hideAll">全部隐藏
-      <input type="checkbox" @change="hideSome">局部隐藏
-      <input type="checkbox" @change="hideNone">不隐藏-->
     </div>
     <div class="hide-block-check">
       <show-hide-ele
@@ -21,39 +18,39 @@
         :showeledata="item"
       ></show-hide-ele>
     </div>
-    <div class="project-title">项目列表</div>
-    <company-list :datalist="filedata.list" v-bind:settingparameter="settingParameter"></company-list>
+    <company-list
+      @addNewTipsMain="addnewTips"
+      :datalist="filedata.list"
+      v-bind:settingparameter="settingParameter"
+      @deleteTips="deleteTips"
+    ></company-list>
+    <div class="submit" v-show="settingParameter.dataCanSet" @click="getSubmitData">提交</div>
   </div>
 </template>
 
 <script>
-import ListItem from "../components/ListItem";
-import CompanyList from "../components/CompanyList";
-
+import CompanyBlock from "../components/CompanyBlock";
 import ShowHideEle from "../components/ShowHideEle";
+var axios = require("axios");
 export default {
-  name: "ProjectList",
+  name: "ProjectOuterUI",
   components: {
-    "list-item": ListItem,
     "show-hide-ele": ShowHideEle,
-    "company-list": CompanyList
+    "company-list": CompanyBlock
   },
   created: function() {
     this.renderShowList();
   },
   methods: {
     switchMode() {
-      if (this.dataCanSet) {
+      if (this.settingParameter.dataCanSet) {
         console.log("setting");
       } else {
         console.log("watching");
       }
-      this.dataCanSet = !this.dataCanSet;
-      this.renderList();
+      this.settingParameter.dataCanSet = !this.settingParameter.dataCanSet;
     },
-    renderList() {
-      this.settingParameter.showSetting = this.dataCanSet;
-    },
+
     showAndHide(data) {
       this.showAndHIdeList.forEach(function(item) {
         if (data.name == item.name) {
@@ -108,13 +105,65 @@ export default {
       }
 
       this.renderShowList();
+    },
+    getSubmitData: function() {
+      console.log(this.filedata);
+      this.$axios({
+        url: "/setjson",
+        method: "GET",
+        params: {
+          data: this.filedata
+        }
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    addnewTips: function(data) {
+      console.log(data);
+      var newobj = {
+        id: this.filedata.list.length,
+        company: data.name,
+        createDate: "",
+
+        title: "",
+        other: "",
+        svnurl: "",
+        cdnurl: "",
+        serverdata: {
+          testLink: "",
+          testServer: "",
+          testServerPath: "",
+          officalLink: "",
+          officalServer: "",
+          officalServerPath: "",
+          statistics: ""
+        }
+      };
+      this.filedata.list.push(newobj);
+    },
+    deleteTips: function(data) {
+      var id = data.id;
+      var index = 0;
+      var that = this;
+      this.filedata.list.map(function(item) {
+        if (item.id == id) {
+          that.filedata.list.splice(index, 1);
+          console.log(that.filedata.list);
+        } else {
+          index++;
+        }
+      });
+      console.log(index);
     }
   },
   data: function() {
     return {
-      dataCanSet: false,
       settingParameter: {
-        showSetting: false,
+        dataCanSet: false,
         showList: []
       },
       showAndHideBtn: [
@@ -133,7 +182,8 @@ export default {
         { id: 7, name: "testServerPath", show: true },
         { id: 8, name: "officalLink", show: true },
         { id: 9, name: "officalServer", show: true },
-        { id: 10, name: "officalServerPath", show: true }
+        { id: 10, name: "officalServerPath", show: true },
+        { id: 11, name: "svnurl", show: true }
       ],
       clickedPartId: 0,
 
@@ -149,7 +199,7 @@ export default {
 
             title: "Prestige Cushion",
             other: "迪奥上线",
-            svnurl: "",
+            svnurl: "www.baidu.com",
             cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
             serverdata: {
               testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
@@ -174,6 +224,7 @@ export default {
             title: "Prestige Cushion",
             other: "迪奥上线",
             cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
+            svnurl: "www.baidu.com",
             serverdata: {
               testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
               testServer: "47.100.119.73",
@@ -196,6 +247,7 @@ export default {
 
             title: "Prestige Cushion",
             other: "迪奥上线",
+            svnurl: "www.baidu.com",
             cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
             serverdata: {
               testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
@@ -239,6 +291,34 @@ export default {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+}
+
+.submit {
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 50px;
+  background: #2eb8cf;
+  border-radius: 10px;
+  color: #fff;
+  margin: 30px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 以下是过渡class，并不是keyframe */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+  height: auto;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  height: 0;
 }
 </style>
 

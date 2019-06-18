@@ -1,15 +1,19 @@
 <template>
-  <div class="flex-item">
-    <list-item-block
-      v-for="item in renderList"
-      v-bind:key="item.name"
-      class="item-block"
-      v-bind:itemdata="item"
-      v-bind:itemname="item.name"
-      v-bind:settingparameter="setting"
-      v-bind:style="listData.style"
-      @changevalue="changevalue"
-    ></list-item-block>
+  <div>
+    <transition-group name="fade" class="flex-item" mode="in-out">
+      <list-item-block
+        v-for="item in renderEle"
+        v-show="item.showEle"
+        v-bind:key="item.name"
+        class="item-block"
+        v-bind:itemdata="item"
+        v-bind:settingparameter="settingparameter"
+        v-bind:style="itemStyle"
+        @click.native="showContent(item)"
+        @changevalue="changevalue"
+        @deleteTips="deleteTips"
+      ></list-item-block>
+    </transition-group>
   </div>
 </template>
 
@@ -19,15 +23,22 @@ export default {
   data: function() {
     return {
       listData: null,
-      setting: this.settingparameter
+      showList: this.settingparameter.showList,
+      listOpenning: true,
+      itemStyle:
+        "background:#dcbfbf;font-size:15px;height:40px;line-height: 40px;"
     };
   },
-  created: function() {
-    var getData = {
-      company: "dior",
-      style:
-        "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;line-height: 50px;",
-      renderEle: [
+
+  name: "ListItem",
+  props: ["itemdata", "settingparameter"],
+  components: {
+    "list-item-block": ListItemBlock
+  },
+  updated: function() {},
+  computed: {
+    renderEle: function() {
+      var basearr = [
         { name: "title", value: this.itemdata.title, size: 2, showEle: true },
         {
           name: "createDate",
@@ -46,6 +57,12 @@ export default {
         {
           name: "officalLink",
           value: this.itemdata.serverdata.officalLink,
+          size: 2,
+          showEle: true
+        },
+        {
+          name: "svnurl",
+          value: this.itemdata.svnurl,
           size: 2,
           showEle: true
         },
@@ -79,36 +96,58 @@ export default {
           size: 2,
           showEle: true
         }
-      ]
-    };
-    this.listData = getData;
-  },
-  name: "ListItem",
-  props: ["itemdata", "settingparameter"],
-  components: {
-    "list-item-block": ListItemBlock
-  },
-  computed: {
-    renderList: function(arr) {
+      ];
       var that = this;
-      return this.listData.renderEle.filter(function(item) {
-        var inlist = false;
-        that.settingparameter.showList.forEach(function(name) {
-          if (item.name == name) {
-            inlist = true;
-          }
-        });
-        return inlist;
+      basearr.forEach(function(item) {
+        var isInLocalList = that.checkEleInArr(item.name, that.showList);
+        var isInHostLIst = that.checkEleInArr(
+          item.name,
+          that.settingparameter.showList
+        );
+        item.showEle = isInHostLIst && isInLocalList;
       });
+
+      return basearr;
     }
   },
   methods: {
     changevalue: function(data) {
       // this.listData.item[data.name] = data.data;
+      console.log(this.itemdata);
+      this.itemdata[data.name] = data.value;
+      return;
       this.listData.renderEle.forEach(element => {
         if (element.name == data.name) {
           element.value = data.value;
         }
+      });
+    },
+    showContent: function(item) {
+      if (item.name != "title" || this.settingparameter.dataCanSet) {
+        return;
+      }
+      var newArr;
+      if (this.listOpenning) {
+        newArr = ["title"];
+      } else {
+        newArr = this.settingparameter.showList;
+      }
+      this.listOpenning = !this.listOpenning;
+      this.showList = newArr;
+      // item.showEle = !item.showEle;
+    },
+    checkEleInArr: function(item, arr) {
+      var isInArr = false;
+      arr.forEach(function(items) {
+        if (item == items) {
+          isInArr = true;
+        }
+      });
+      return isInArr;
+    },
+    deleteTips: function() {
+      this.$emit("deleteTips", {
+        id: this.itemdata.id
       });
     }
   }
@@ -125,6 +164,7 @@ export default {
   display: flex;
   /* flex-grow: 1; */
   flex-wrap: wrap;
+  position: relative;
 }
 .item-name {
   width: 95%;
