@@ -7,7 +7,7 @@
     >
       <div :class="itemdata.size==2?'div-block-name':'div-block-name-half'">
         {{getName}}
-        <div class="delete" @click="deleteTips">删除</div>
+        <div class="delete" @click="deleteTips" v-if="itemdata.name=='title'">删除</div>
       </div>
       <div class="input-block">
         <input
