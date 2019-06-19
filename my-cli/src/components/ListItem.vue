@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{settingparameter.showList}}
     <transition-group name="fade" class="flex-item" mode="in-out">
       <list-item-block
         v-for="item in renderEle"
@@ -130,7 +131,7 @@ export default {
       if (this.listOpenning) {
         newArr = ["title"];
       } else {
-        newArr = this.settingparameter.showList;
+        newArr = this.$util.originalShowList;
       }
       this.listOpenning = !this.listOpenning;
       this.showList = newArr;

@@ -12,14 +12,14 @@
         class="switch-showpart-btn"
         v-for="item in showAndHideBtn"
         v-bind:key="item.id"
-        @click="changePartShowOrHide(item)"
+        @click="changePartShowOrHide(item.id)"
         v-bind:class="{'btnActive':clickedPartId==item.id}"
       >{{item.name}}</div>
     </div>
     <div class="blank"></div>
     <div class="hide-block-check">
       <show-hide-ele
-        @switchChecked="showAndHide"
+        @switchChecked="changeTipsShow"
         v-bind:key="item.id"
         v-for="item in showAndHIdeList"
         :showeledata="item"
@@ -47,7 +47,7 @@ export default {
   },
   created: function() {
     this.getJsonData();
-    this.renderShowList();
+    this.changePartShowOrHide(this.clickedPartId);
   },
   methods: {
     switchMode() {
@@ -59,7 +59,7 @@ export default {
       this.settingParameter.dataCanSet = !this.settingParameter.dataCanSet;
     },
 
-    showAndHide(data) {
+    changeTipsShow(data) {
       this.showAndHIdeList.forEach(function(item) {
         if (data.name == item.name) {
           item.show = data.value;
@@ -67,6 +67,7 @@ export default {
       });
 
       this.renderShowList();
+      console.log(this.showAndHIdeList);
     },
     renderShowList: function() {
       var arr = [];
@@ -75,16 +76,18 @@ export default {
           arr.push(item.name);
         }
       });
+
       this.settingParameter.showList = arr;
+      console.log(this.settingParameter.showList);
     },
-    changePartShowOrHide: function(item) {
-      this.clickedPartId = item.id;
+    changePartShowOrHide: function(id) {
+      this.clickedPartId = id;
       var allowArr;
-      if (item.id == 0) {
+      if (id == 0) {
         allowArr = ["all"];
-      } else if (item.id == 1) {
+      } else if (id == 1) {
         allowArr = ["title", "officalLink"];
-      } else if (item.id == 2) {
+      } else if (id == 2) {
         allowArr = ["title"];
       }
 
@@ -210,7 +213,7 @@ export default {
         { id: 10, name: "officalServerPath", show: true },
         { id: 11, name: "svnurl", show: true }
       ],
-      clickedPartId: 0,
+      clickedPartId: 1,
 
       filedata: {
         title: "update",
@@ -323,6 +326,7 @@ export default {
   color: #2eb8cf;
   text-align: center;
   line-height: 50px;
+  cursor: pointer;
 }
 .switch-showpart-btn:nth-child(1) {
   border-radius: 10px 0 0 10px;
