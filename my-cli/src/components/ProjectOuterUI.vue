@@ -67,7 +67,6 @@ export default {
       });
 
       this.renderShowList();
-      console.log(this.showAndHIdeList);
     },
     renderShowList: function() {
       var arr = [];
@@ -78,7 +77,6 @@ export default {
       });
 
       this.settingParameter.showList = arr;
-      console.log(this.settingParameter.showList);
     },
     changePartShowOrHide: function(id) {
       this.clickedPartId = id;
@@ -94,7 +92,6 @@ export default {
       this.hideAnyPart(allowArr);
     },
     hideAnyPart: function(allowArr) {
-      console.log(allowArr);
       if (allowArr[0] == "all") {
         this.showAndHIdeList.forEach(function(item) {
           item.show = true;
@@ -180,12 +177,10 @@ export default {
       this.filedata.list.map(function(item) {
         if (item.id == id) {
           that.filedata.list.splice(index, 1);
-          console.log(that.filedata.list);
         } else {
           index++;
         }
       });
-      console.log(index);
     }
   },
   data: function() {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{settingparameter.showList}}
     <transition-group name="fade" class="flex-item" mode="in-out">
       <list-item-block
         v-for="item in renderEle"
@@ -24,7 +23,7 @@ export default {
   data: function() {
     return {
       listData: null,
-      showList: this.settingparameter.showList,
+      showList: this.$util.originalShowList,
       listOpenning: true,
       itemStyle:
         "background:#dcbfbf;font-size:15px;height:40px;line-height: 40px;"
