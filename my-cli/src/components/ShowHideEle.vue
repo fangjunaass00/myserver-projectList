@@ -40,13 +40,18 @@ export default {
   text-align: center;
   height: 40px;
   line-height: 40px;
+  -webkit-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.5), 0px 3px 5px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 .check-item:hover {
   transform: scale(1.2);
+  z-index: 3;
+  text-shadow: 0px 0px 14px #fff;
 }
 
 .check-item-active {

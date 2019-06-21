@@ -1,24 +1,26 @@
 <template>
   <!-- <div class="item-block"> -->
-  <div :class="itemdata.size==2?'item-block':'item-block-half'">
-    <div
-      class="slide-part"
-      v-bind:class="{'div-block-animate':settingparameter.dataCanSet,'div-title':itemdata.name=='title'}"
-    >
-      <div :class="itemdata.size==2?'div-block-name':'div-block-name-half'">
-        {{getName}}
-        <div class="delete" @click="deleteTips" v-if="itemdata.name=='title'">删除</div>
-      </div>
-      <div class="input-block">
-        <input
-          type="text"
-          class="input-block-input"
-          :value="itemdata.value"
-          v-on:change="changeEvent"
-        >
+  <transition name="fade" mode="in-out">
+    <div :class="itemdata.size==2?'item-block':'item-block-half'">
+      <div
+        class="slide-part"
+        v-bind:class="{'div-block-animate':settingparameter.dataCanSet,'div-title':itemdata.name=='title'}"
+      >
+        <div :class="itemdata.size==2?'div-block-name':'div-block-name-half'">
+          {{getName}}
+          <div class="delete" @click="deleteTips" v-if="itemdata.name=='title'">删除</div>
+        </div>
+        <div class="input-block">
+          <input
+            type="text"
+            class="input-block-input"
+            :value="itemdata.value"
+            v-on:change="changeEvent"
+          >
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -70,6 +72,7 @@ export default {
   width: 100%;
   height: 200%;
   transition: 0.5s;
+  box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.4) inset;
 }
 .div-block-name {
   width: 95%;
@@ -80,6 +83,8 @@ export default {
   width: 90%;
   padding-left: 10%;
   height: 50%;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .input-block {
@@ -92,8 +97,11 @@ export default {
 }
 
 .input-block-input {
-  width: 95%;
+  width: 80%;
+  margin-left: 10%;
   background: transparent;
+  text-align: center;
+  color: #423939;
 }
 
 .div-title {

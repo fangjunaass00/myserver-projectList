@@ -58,6 +58,8 @@ export default {
   line-height: 50px;
   padding-left: 10%;
   position: relative;
+  cursor: pointer;
+  box-shadow: 0px 0px 5px 1px rgba(255, 255, 255, 1) inset;
 }
 .company-addbtn {
   position: absolute;

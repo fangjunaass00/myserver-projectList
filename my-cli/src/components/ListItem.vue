@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <transition-group name="fade" class="flex-item" mode="in-out">
-      <list-item-block
-        v-for="item in renderEle"
-        v-show="item.showEle"
-        v-bind:key="item.name"
-        class="item-block"
-        v-bind:itemdata="item"
-        v-bind:settingparameter="settingparameter"
-        v-bind:style="itemStyle"
-        @click.native="showContent(item)"
-        @changevalue="changevalue"
-        @deleteTips="deleteTips"
-      ></list-item-block>
-    </transition-group>
+  <div class="flex-item">
+    <!-- <transition-group name="fade" mode="in-out"> -->
+    <list-item-block
+      v-for="item in renderEle"
+      v-show="item.showEle"
+      v-bind:key="item.name"
+      class="item-block"
+      v-bind:itemdata="item"
+      v-bind:settingparameter="settingparameter"
+      v-bind:style="itemStyle"
+      @click.native="showContent(item)"
+      @changevalue="changevalue"
+      @deleteTips="deleteTips"
+    ></list-item-block>
+    <!-- </transition-group> -->
   </div>
 </template>
 

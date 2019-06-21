@@ -305,6 +305,7 @@ export default {
   text-align: center;
   line-height: 50px;
   transition: 0.5s;
+  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.5);
 }
 .hide-block-btn {
   width: 100%;
@@ -322,7 +323,14 @@ export default {
   text-align: center;
   line-height: 50px;
   cursor: pointer;
+  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
 }
+
+.switch-showpart-btn:hover {
+  width: 120px;
+}
+
 .switch-showpart-btn:nth-child(1) {
   border-radius: 10px 0 0 10px;
 }
@@ -360,7 +368,7 @@ export default {
 }
 
 /* 以下是过渡class，并不是keyframe */
-.fade-enter-active,
+/* .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
   height: auto;
@@ -370,6 +378,26 @@ export default {
 .fade-leave-to {
   opacity: 0;
   height: 0;
+} */
+
+.fade-enter-active {
+  animation: fade-in 0.5s;
+}
+
+.fade-leave-active {
+  animation: fade-in 0.5s reverse;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 .fade2-enter-active {
