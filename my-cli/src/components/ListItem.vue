@@ -98,14 +98,14 @@ export default {
         }
       ];
       var that = this;
-      basearr.forEach(function(item) {
-        var isInLocalList = that.checkEleInArr(item.name, that.showList);
-        var isInHostLIst = that.checkEleInArr(
-          item.name,
-          that.settingparameter.showList
-        );
-        item.showEle = isInHostLIst && isInLocalList;
-      });
+      // basearr.forEach(function(item) {
+      //   var isInLocalList = that.checkEleInArr(item.name, that.showList);
+      //   var isInHostLIst = that.checkEleInArr(
+      //     item.name,
+      //     that.settingparameter.showList
+      //   );
+      //   item.showEle = isInHostLIst && isInLocalList;
+      // });
 
       return basearr;
     }
@@ -115,12 +115,6 @@ export default {
       // this.listData.item[data.name] = data.data;
       console.log(this.itemdata);
       this.itemdata[data.name] = data.value;
-      return;
-      this.listData.renderEle.forEach(element => {
-        if (element.name == data.name) {
-          element.value = data.value;
-        }
-      });
     },
     showContent: function(item) {
       if (item.name != "title" || this.settingparameter.dataCanSet) {

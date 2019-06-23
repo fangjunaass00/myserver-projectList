@@ -32,6 +32,10 @@ export default {
       this.$emit("deleteTips", {
         id: data.id
       });
+    },
+    changeShowList: function(arr) {
+      console.log("changeShowList");
+      console.log(arr);
     }
   },
   computed: {
