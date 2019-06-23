@@ -126,6 +126,7 @@ export default {
           var postdata = res.data.data;
           var jsonData = JSON.parse(postdata);
           console.log(jsonData);
+          this.filedata = jsonData;
         })
         .catch(err => {
           console.log(err);

@@ -14,7 +14,7 @@ var app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:81", "http://47.99.166.160:81"],
+    origin: ["http://localhost:81", "http://47.99.166.160:81", "http://47.99.166.160:82"],
     methods: ["GET", "POST"],
     alloweHeaders: ["Conten-Type", "Authorization"]
   })

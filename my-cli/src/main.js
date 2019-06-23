@@ -8,7 +8,7 @@ import util from "@/util/util";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
-axios.defaults.baseURL = "http://47.99.166.160:82/";
+axios.defaults.baseURL = "http://47.99.166.160:83/";
 Vue.prototype.$util = util;
 /* eslint-disable no-new */
 new Vue({

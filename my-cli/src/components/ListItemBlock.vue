@@ -11,6 +11,7 @@
           <div class="delete" @click="deleteTips" v-if="itemdata.name=='title'">删除</div>
         </div>
         <div class="input-block">
+          <span class="input-name">{{getNameInput}}</span>
           <input
             type="text"
             class="input-block-input"
@@ -47,6 +48,9 @@ export default {
         "：" +
         this.itemdata.value
       );
+    },
+    getNameInput: function() {
+      return this.$util.getParameterName(this.itemdata.name) + "：";
     }
   },
   filters: {
@@ -78,6 +82,7 @@ export default {
   width: 95%;
   padding-left: 5%;
   height: 50%;
+  overflow: hidden;
 }
 .div-block-name-half {
   width: 90%;
@@ -90,15 +95,18 @@ export default {
 .input-block {
   width: 100%;
   height: 50%;
+  display: flex;
 }
 
 .div-block-animate {
   transform: translateY(-50%);
 }
-
+.input-name {
+  flex-shrink: 0;
+  width: 25%;
+}
 .input-block-input {
-  width: 80%;
-  margin-left: 10%;
+  width: 100%;
   background: transparent;
   text-align: center;
   color: #423939;
@@ -107,6 +115,7 @@ export default {
 .div-title {
   background: yellow;
   color: #000;
+  cursor: pointer;
 }
 
 .delete {

@@ -26,7 +26,7 @@ export default {
       showList: this.$util.originalShowList,
       listOpenning: true,
       itemStyle:
-        "background:#dcbfbf;font-size:15px;height:40px;line-height: 40px;"
+        "background:rgb(187, 236, 202);font-size:15px;height:40px;line-height: 40px;"
     };
   },
 
