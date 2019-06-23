@@ -5,7 +5,9 @@ import App from "./App";
 import router from "./router";
 import axios from "axios";
 import util from "@/util/util";
+import VueBus from "@/util/vue-bus";
 
+Vue.use(VueBus);
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = "http://47.99.166.160:83/";

@@ -3,12 +3,13 @@
     <!-- <transition-group name="fade" mode="in-out"> -->
     <list-item-block
       v-for="item in renderEle"
-      v-show="item.showEle"
       v-bind:key="item.name"
       class="item-block"
       v-bind:itemdata="item"
       v-bind:settingparameter="settingparameter"
       v-bind:style="itemStyle"
+      v-bind:showlist="showList"
+      v-bind:id="id"
       @click.native="showContent(item)"
       @changevalue="changevalue"
       @deleteTips="deleteTips"
@@ -31,7 +32,8 @@ export default {
   },
 
   name: "ListItem",
-  props: ["itemdata", "settingparameter"],
+  created: function() {},
+  props: ["itemdata", "settingparameter", "id"],
   components: {
     "list-item-block": ListItemBlock
   },
@@ -113,13 +115,13 @@ export default {
   methods: {
     changevalue: function(data) {
       // this.listData.item[data.name] = data.data;
-      console.log(this.itemdata);
       this.itemdata[data.name] = data.value;
     },
     showContent: function(item) {
       if (item.name != "title" || this.settingparameter.dataCanSet) {
         return;
       }
+
       var newArr;
       if (this.listOpenning) {
         newArr = ["title"];
@@ -127,7 +129,10 @@ export default {
         newArr = this.$util.originalShowList;
       }
       this.listOpenning = !this.listOpenning;
-      this.showList = newArr;
+      console.log("showContent");
+      console.log(newArr);
+      this.$bus.emit("changeShowListById", newArr, this.id);
+      // this.showList = newArr;
       // item.showEle = !item.showEle;
     },
     checkEleInArr: function(item, arr) {

@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="item-block"> -->
   <transition name="fade" mode="in-out">
-    <div :class="itemdata.size==2?'item-block':'item-block-half'">
+    <div v-show="inshowList" :class="itemdata.size==2?'item-block':'item-block-half'">
       <div
         class="slide-part"
         v-bind:class="{'div-block-animate':settingparameter.dataCanSet,'div-title':itemdata.name=='title'}"
@@ -28,7 +28,9 @@
 export default {
   name: "ListItemBlock",
   data: function() {
-    return {};
+    return {
+      showList: this.settingparameter.showList
+    };
   },
   methods: {
     changeEvent(e) {
@@ -39,6 +41,25 @@ export default {
     },
     deleteTips: function() {
       this.$emit("deleteTips");
+    },
+    changeShow: function(item) {
+      console.log("changeShow");
+      console.log(item);
+      this.showList = item;
+    },
+    changeShowById: function(item, id) {
+      if (this.id == id) {
+        this.showList = item;
+      }
+    }
+  },
+  created: function() {
+    this.$bus.on("changeShowList", this.changeShow);
+    this.$bus.on("changeShowListById", this.changeShowById);
+  },
+  watch: {
+    showlist: function() {
+      this.showList = this.settingparameter.showlist;
     }
   },
   computed: {
@@ -51,12 +72,30 @@ export default {
     },
     getNameInput: function() {
       return this.$util.getParameterName(this.itemdata.name) + "：";
+    },
+    inshowList: function() {
+      var isInArr = false;
+      var arr = this.showList;
+      var name = this.itemdata.name;
+      arr.forEach(function(items) {
+        if (name == items) {
+          isInArr = true;
+        }
+      });
+      return isInArr;
+    },
+    changeShowList: function(showList, id) {
+      console.log(changeShowList);
+      console.log(showList, id);
+      if (this.id == id) {
+        this.showlist = showList;
+      }
     }
   },
   filters: {
     namefilter: function(str) {}
   },
-  props: ["itemdata", "settingparameter"]
+  props: ["itemdata", "settingparameter", "showlist", "id"]
 };
 </script>
 

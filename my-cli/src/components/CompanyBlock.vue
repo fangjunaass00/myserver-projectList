@@ -32,10 +32,6 @@ export default {
       this.$emit("deleteTips", {
         id: data.id
       });
-    },
-    changeShowList: function(arr) {
-      console.log("changeShowList");
-      console.log(arr);
     }
   },
   computed: {
@@ -60,7 +56,6 @@ export default {
         index++;
         newarr.push(obj);
       }
-
       return newarr;
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="company-name" @click="showOrHideList">
-      公司名称：{{itemdata.name}}
+      公司名称：{{itemdata.name }}
       <div class="company-addbtn" @click.stop="addNewTips">添加</div>
     </div>
     <!-- {{itemdata}} -->
@@ -9,6 +9,7 @@
       <list-item
         v-show="showList"
         v-for="items in itemdata.value"
+        v-bind:id="items.id"
         v-bind:key="items.id"
         v-bind:settingparameter="settingparameter"
         v-bind:itemdata="items"

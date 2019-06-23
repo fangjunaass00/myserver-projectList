@@ -77,10 +77,7 @@ export default {
         }
       });
 
-      // this.settingParameter.showList = arr;
-      // CompanyBlock.changeShowList()
-      console.log(this.$refs);
-      this.$refs.companyblock.changeShowList(arr);
+      this.$bus.emit("changeShowList", arr);
     },
     changePartShowOrHide: function(id) {
       this.clickedPartId = id;

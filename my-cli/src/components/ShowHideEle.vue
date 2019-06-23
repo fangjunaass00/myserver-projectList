@@ -15,7 +15,6 @@ export default {
   props: ["showeledata"],
   methods: {
     checkChange: function(e) {
-      console.log(e.target, this.showeledata);
       this.$emit("switchChecked", {
         name: this.showeledata.name,
         value: !this.showeledata.show
