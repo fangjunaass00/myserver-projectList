@@ -32,20 +32,24 @@ export default {
       showList: this.settingparameter.showList
     };
   },
+  created: function() {
+    this.$bus.on("change show list", this.changeShow);
+    this.$bus.on("project show", this.changeShowById);
+  },
   methods: {
     changeEvent(e) {
       console.log({
         name: this.itemdata.name,
         value: e.target.value
       });
-      this.$bus.emit("changevalue", {
+      this.$bus.emit("change project item", {
         name: this.itemdata.name,
         value: e.target.value,
         id: this.id
       });
     },
     deleteTips: function() {
-      this.$emit("deleteTips");
+      this.$bus.emit("deleteTips", { id: this.id });
     },
     changeShow: function(item) {
       console.log(item);
@@ -57,10 +61,7 @@ export default {
       }
     }
   },
-  created: function() {
-    this.$bus.on("changeShowList", this.changeShow);
-    this.$bus.on("changeShowListById", this.changeShowById);
-  },
+
   watch: {
     showlist: function() {
       this.showList = this.settingparameter.showlist;
@@ -87,13 +88,6 @@ export default {
         }
       });
       return isInArr;
-    },
-    changeShowList: function(showList, id) {
-      console.log(changeShowList);
-      console.log(showList, id);
-      if (this.id == id) {
-        this.showlist = showList;
-      }
     }
   },
   filters: {

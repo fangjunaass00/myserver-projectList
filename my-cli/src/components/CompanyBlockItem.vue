@@ -2,7 +2,7 @@
   <div>
     <div class="company-name" @click="showOrHideList">
       公司名称：{{itemdata.name }}
-      <div class="company-addbtn" @click.stop="addNewTips">添加</div>
+      <div class="company-addbtn" @click.stop="addNewProject">添加</div>
     </div>
     <!-- {{itemdata}} -->
     <transition-group name="fade">
@@ -13,7 +13,6 @@
         v-bind:key="items.id"
         v-bind:settingparameter="settingparameter"
         v-bind:itemdata="items"
-        @deleteTips="deleteTips"
       ></project-item>
     </transition-group>
   </div>
@@ -36,14 +35,9 @@ export default {
     showOrHideList: function() {
       this.showList = !this.showList;
     },
-    addNewTips: function() {
-      this.$emit("addNewTips", {
+    addNewProject: function() {
+      this.$bus.emit("add new projrct", {
         name: this.itemdata.name
-      });
-    },
-    deleteTips: function(data) {
-      this.$emit("deleteTips", {
-        id: data.id
       });
     }
   }

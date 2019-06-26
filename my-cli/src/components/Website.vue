@@ -27,10 +27,8 @@
     </div>
     <company-block
       ref="companyblock"
-      @addNewTipsMain="addnewTips"
       :datalist="filedata.list"
       v-bind:settingparameter="settingParameter"
-      @deleteTips="deleteTips"
     ></company-block>
     <div class="btn-list">
       <div class="submit" v-show="settingParameter.dataCanSet" @click="addNewCompany">添加新公司项目</div>
@@ -56,8 +54,10 @@ export default {
   created: function() {
     this.getJsonData();
     this.changePartShowOrHide(this.clickedPartId);
-    this.$bus.on("close newpart", this.hideNewCompany);
-    this.$bus.on("add new company data", this.addNewCompanyData);
+    this.$bus.on("close company", this.hideNewCompany);
+    this.$bus.on("create new company", this.addNewCompanyData);
+    this.$bus.on("add new projrct", this.addNewProject);
+    this.$bus.on("deleteTips", this.addNewProject);
   },
   methods: {
     switchMode() {
@@ -86,7 +86,7 @@ export default {
         }
       });
 
-      this.$bus.emit("changeShowList", arr);
+      this.$bus.emit("change show list", arr);
     },
     changePartShowOrHide: function(id) {
       this.clickedPartId = id;
@@ -158,7 +158,7 @@ export default {
           console.log(err);
         });
     },
-    addnewTips: function(data) {
+    addNewProject: function(data) {
       console.log(data);
       var newobj = {
         id: Date.now() - 1,

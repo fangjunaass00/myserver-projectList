@@ -5,8 +5,6 @@
       v-bind:key="item.index"
       v-bind:settingparameter="settingparameter"
       v-bind:itemdata="item"
-      @addNewTips="addNewTips"
-      @deleteTips="deleteTips"
     ></company-block-item>
   </div>
 </template>
@@ -22,18 +20,7 @@ export default {
   data: function() {
     return {};
   },
-  methods: {
-    addNewTips: function(data) {
-      this.$emit("addNewTipsMain", {
-        name: data.name
-      });
-    },
-    deleteTips: function(data) {
-      this.$emit("deleteTips", {
-        id: data.id
-      });
-    }
-  },
+  methods: {},
   computed: {
     projectList: function() {
       var company = {};

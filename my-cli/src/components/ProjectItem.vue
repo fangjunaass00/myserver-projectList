@@ -11,7 +11,6 @@
       v-bind:showlist="showList"
       v-bind:id="id"
       @click.native="showContent(item)"
-      @deleteTips="deleteTips"
     ></project-item-block>
     <!-- </transition-group> -->
   </div>
@@ -33,7 +32,7 @@ export default {
   name: "ListItem",
   created: function() {
     var that = this;
-    this.$bus.on("changevalue", function(data) {
+    this.$bus.on("change project item", function(data) {
       if (this.id == data.id) {
         that.itemdata[data.name] = data.value;
         console.log(that.itemdata);
@@ -123,7 +122,7 @@ export default {
       }
       this.listOpenning = !this.listOpenning;
       // 向子集传送事件
-      this.$bus.emit("changeShowListById", newArr, this.id);
+      this.$bus.emit("project show", newArr, this.id);
     },
     checkEleInArr: function(item, arr) {
       var isInArr = false;
@@ -133,11 +132,6 @@ export default {
         }
       });
       return isInArr;
-    },
-    deleteTips: function() {
-      this.$emit("deleteTips", {
-        id: this.itemdata.id
-      });
     }
   }
 };

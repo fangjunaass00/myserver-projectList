@@ -90,10 +90,10 @@ export default {
         alert("请填写公司名称");
       }
       console.log(this.tipsData);
-      this.$bus.emit("add new company data", this.tipsData);
+      this.$bus.emit("create new company", this.tipsData);
     },
     cancelData: function() {
-      this.$bus.emit("close newpart");
+      this.$bus.emit("close company");
     }
   }
 };
