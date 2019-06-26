@@ -106,23 +106,10 @@ export default {
         }
       ];
       var that = this;
-      // basearr.forEach(function(item) {
-      //   var isInLocalList = that.checkEleInArr(item.name, that.showList);
-      //   var isInHostLIst = that.checkEleInArr(
-      //     item.name,
-      //     that.settingparameter.showList
-      //   );
-      //   item.showEle = isInHostLIst && isInLocalList;
-      // });
-
       return basearr;
     }
   },
   methods: {
-    changevalue: function(data) {
-      // this.listData.item[data.name] = data.data;
-      this.itemdata[data.name] = data.value;
-    },
     showContent: function(item) {
       if (item.name != "title" || this.settingparameter.dataCanSet) {
         return;
@@ -135,11 +122,8 @@ export default {
         newArr = this.$util.originalShowList;
       }
       this.listOpenning = !this.listOpenning;
-      console.log("showContent");
-      console.log(newArr);
+      // 向子集传送事件
       this.$bus.emit("changeShowListById", newArr, this.id);
-      // this.showList = newArr;
-      // item.showEle = !item.showEle;
     },
     checkEleInArr: function(item, arr) {
       var isInArr = false;
