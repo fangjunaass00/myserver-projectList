@@ -40,7 +40,8 @@ export default {
       });
       this.$bus.emit("changevalue", {
         name: this.itemdata.name,
-        value: e.target.value
+        value: e.target.value,
+        id: this.id
       });
     },
     deleteTips: function() {

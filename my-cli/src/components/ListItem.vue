@@ -34,8 +34,10 @@ export default {
   created: function() {
     var that = this;
     this.$bus.on("changevalue", function(data) {
-      that.itemdata[data.name] = data.value;
-      console.log(that.itemdata);
+      if (this.id == data.id) {
+        that.itemdata[data.name] = data.value;
+        console.log(that.itemdata);
+      }
     });
   },
   props: ["itemdata", "settingparameter", "id"],
