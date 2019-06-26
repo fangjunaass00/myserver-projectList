@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: "AddNewCompany",
+  name: "CompanyNewBlock",
   data: function() {
     return {
       tipsData: {

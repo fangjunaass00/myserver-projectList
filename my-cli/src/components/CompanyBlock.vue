@@ -1,23 +1,23 @@
 <template>
   <div>
-    <company-list-item
+    <company-block-item
       v-for="item in projectList"
       v-bind:key="item.index"
       v-bind:settingparameter="settingparameter"
       v-bind:itemdata="item"
       @addNewTips="addNewTips"
       @deleteTips="deleteTips"
-    ></company-list-item>
+    ></company-block-item>
   </div>
 </template>
 
 <script>
-import CompanyListItem from "@/components/CompanyListItem";
+import CompanyBlockItem from "@/components/CompanyBlockItem";
 export default {
   name: "CompanyBlock",
   props: ["settingparameter", "datalist"],
   components: {
-    "company-list-item": CompanyListItem
+    "company-block-item": CompanyBlockItem
   },
   data: function() {
     return {};

@@ -1,7 +1,7 @@
 <template>
   <div class="flex-item">
     <!-- <transition-group name="fade" mode="in-out"> -->
-    <list-item-block
+    <project-item-block
       v-for="item in renderEle"
       v-bind:key="item.name"
       class="item-block"
@@ -12,13 +12,13 @@
       v-bind:id="id"
       @click.native="showContent(item)"
       @deleteTips="deleteTips"
-    ></list-item-block>
+    ></project-item-block>
     <!-- </transition-group> -->
   </div>
 </template>
 
 <script>
-import ListItemBlock from "@/components/ListItemBlock";
+import ProjectItemBlock from "@/components/ProjectItemBlock";
 export default {
   data: function() {
     return {
@@ -42,7 +42,7 @@ export default {
   },
   props: ["itemdata", "settingparameter", "id"],
   components: {
-    "list-item-block": ListItemBlock
+    "project-item-block": ProjectItemBlock
   },
   computed: {
     renderEle: function() {

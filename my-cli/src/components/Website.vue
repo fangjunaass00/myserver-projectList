@@ -18,40 +18,40 @@
     </div>
     <div class="blank"></div>
     <div class="hide-block-check">
-      <show-hide-ele
+      <nav-part
         @switchChecked="changeTipsShow"
         v-bind:key="item.id"
         v-for="item in showAndHIdeList"
         :showeledata="item"
-      ></show-hide-ele>
+      ></nav-part>
     </div>
-    <company-list
+    <company-block
       ref="companyblock"
       @addNewTipsMain="addnewTips"
       :datalist="filedata.list"
       v-bind:settingparameter="settingParameter"
       @deleteTips="deleteTips"
-    ></company-list>
+    ></company-block>
     <div class="btn-list">
       <div class="submit" v-show="settingParameter.dataCanSet" @click="addNewCompany">添加新公司项目</div>
       <div class="submit" v-show="settingParameter.dataCanSet" @click="getSubmitData">提交</div>
     </div>
-    <new-company v-show="addNewPart"></new-company>
+    <company-new-block v-show="addNewPart"></company-new-block>
   </div>
 </template>
 
 <script>
 import CompanyBlock from "../components/CompanyBlock";
-import ShowHideEle from "../components/ShowHideEle";
-import AddNewCompany from "../components/AddNewCompany";
+import Nav from "../components/Nav";
+import CompanyNewBlock from "../components/CompanyNewBlock";
 
 var axios = require("axios");
 export default {
-  name: "ProjectOuterUI",
+  name: "Website",
   components: {
-    "show-hide-ele": ShowHideEle,
-    "company-list": CompanyBlock,
-    "new-company": AddNewCompany
+    "nav-part": Nav,
+    "company-block": CompanyBlock,
+    "company-new-block": CompanyNewBlock
   },
   created: function() {
     this.getJsonData();

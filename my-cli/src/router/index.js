@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import HelloWorld from "@/components/HelloWorld";
-import ProjectOuterUI from "@/components/ProjectOuterUI";
+import Website from "@/components/Website";
 
 Vue.use(Router);
 
@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "ProjectOuterUI",
-      component: ProjectOuterUI
+      name: "Website",
+      component: Website
     }
   ]
 });

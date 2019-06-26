@@ -6,7 +6,7 @@
     </div>
     <!-- {{itemdata}} -->
     <transition-group name="fade">
-      <list-item
+      <project-item
         v-show="showList"
         v-for="items in itemdata.value"
         v-bind:id="items.id"
@@ -14,18 +14,18 @@
         v-bind:settingparameter="settingparameter"
         v-bind:itemdata="items"
         @deleteTips="deleteTips"
-      ></list-item>
+      ></project-item>
     </transition-group>
   </div>
 </template>
 
 <script>
-import ListItem from "@/components/ListItem";
+import ProjectItem from "@/components/ProjectItem";
 export default {
-  name: "CompanyListItem",
+  name: "CompanyBlockItem",
   props: ["settingparameter", "itemdata"],
   components: {
-    "list-item": ListItem
+    "project-item": ProjectItem
   },
   data: function() {
     return {
