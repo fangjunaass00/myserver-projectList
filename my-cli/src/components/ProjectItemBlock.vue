@@ -52,8 +52,9 @@ export default {
       this.$bus.emit("delete tips", { id: this.id });
     },
     changeShow: function(item) {
-      console.log(item);
+      console.log("接收事件");
       this.showList = item;
+      console.log(this.showList);
     },
     changeShowById: function(item, id) {
       if (this.id == id) {

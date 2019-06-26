@@ -85,8 +85,9 @@ export default {
           arr.push(item.name);
         }
       });
-
-      this.$bus.emit("change show list", arr);
+      setTimeout(() => {
+        this.$bus.emit("change show list", arr);
+      }, 200);
     },
     changePartShowOrHide: function(id) {
       this.clickedPartId = id;
@@ -180,6 +181,7 @@ export default {
         }
       };
       this.filedata.list.push(newobj);
+      this.renderShowList();
     },
     addNewCompanyData: function(data) {
       console.log(data);
@@ -254,80 +256,7 @@ export default {
 
       filedata: {
         title: "update",
-        list: [
-          {
-            id: 0,
-            company: "dior",
-            style:
-              "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
-            createDate: "2018-08-01",
-
-            title: "Prestige Cushion",
-            other: "迪奥上线",
-            svnurl: "www.baidu.com",
-            cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
-            serverdata: {
-              testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
-              testServer: "47.100.119.73",
-              testServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              officalLink:
-                "http://diorpst.herdsric.com/dior-flower-rose/index.do",
-              officalServer: "47.100.4.192",
-              officalServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              statistics: "迪奥游戏"
-            }
-          },
-          {
-            company: "dior",
-            id: 1,
-            style:
-              "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
-            createDate: "2018-08-01",
-
-            title: "Prestige Cushion",
-            other: "迪奥上线",
-            cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
-            svnurl: "www.baidu.com",
-            serverdata: {
-              testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
-              testServer: "47.100.119.73",
-              testServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              officalLink:
-                "http://diorpst.herdsric.com/dior-flower-rose/index.do",
-              officalServer: "47.100.4.192",
-              officalServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              statistics: "迪奥游戏"
-            }
-          },
-          {
-            company: "hugoboss",
-            id: 2,
-            style:
-              "background:#dcbfbf;font-size:15px;height:50px;padding-left:5%;",
-            createDate: "2018-08-01",
-
-            title: "Prestige Cushion",
-            other: "迪奥上线",
-            svnurl: "www.baidu.com",
-            cdnurl: "http://alicdn.herdsric.com/dior/dior-icon-sampling",
-            serverdata: {
-              testLink: "http://dior.herdsric.com/dior-flower-rose/index.do",
-              testServer: "47.100.119.73",
-              testServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              officalLink:
-                "http://diorpst.herdsric.com/dior-flower-rose/index.do",
-              officalServer: "47.100.4.192",
-              officalServerPath:
-                "user/herdsric/tomcate-8010/webapps/hugoboss_father",
-              statistics: "迪奥游戏"
-            }
-          }
-        ]
+        list: []
       }
     };
   }
