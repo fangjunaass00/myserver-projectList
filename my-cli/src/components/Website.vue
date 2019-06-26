@@ -57,7 +57,7 @@ export default {
     this.$bus.on("close company", this.hideNewCompany);
     this.$bus.on("create new company", this.addNewCompanyData);
     this.$bus.on("add new projrct", this.addNewProject);
-    this.$bus.on("deleteTips", this.addNewProject);
+    this.$bus.on("delete tips", this.deleteTips);
   },
   methods: {
     switchMode() {

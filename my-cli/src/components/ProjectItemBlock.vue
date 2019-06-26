@@ -49,7 +49,7 @@ export default {
       });
     },
     deleteTips: function() {
-      this.$bus.emit("deleteTips", { id: this.id });
+      this.$bus.emit("delete tips", { id: this.id });
     },
     changeShow: function(item) {
       console.log(item);
@@ -62,10 +62,9 @@ export default {
     }
   },
 
-  watch: {
-    showlist: function() {
-      this.showList = this.settingparameter.showlist;
-    }
+  updated: function() {
+    // this.showList = this.settingparameter.showlist;
+    // console.log("watch" + this.settingparameter.showlist);
   },
   computed: {
     getName: function() {
@@ -87,6 +86,7 @@ export default {
           isInArr = true;
         }
       });
+      console.log(arr, isInArr);
       return isInArr;
     }
   },

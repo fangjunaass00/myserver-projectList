@@ -1,6 +1,7 @@
 <template>
   <div class="flex-item">
     <!-- <transition-group name="fade" mode="in-out"> -->
+    {{showList}}
     <project-item-block
       v-for="item in renderEle"
       v-bind:key="item.name"
