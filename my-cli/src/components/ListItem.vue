@@ -11,7 +11,6 @@
       v-bind:showlist="showList"
       v-bind:id="id"
       @click.native="showContent(item)"
-      @changevalue="changevalue"
       @deleteTips="deleteTips"
     ></list-item-block>
     <!-- </transition-group> -->
@@ -32,12 +31,17 @@ export default {
   },
 
   name: "ListItem",
-  created: function() {},
+  created: function() {
+    var that = this;
+    this.$bus.on("changevalue", function(data) {
+      that.itemdata[data.name] = data.value;
+      console.log(that.itemdata);
+    });
+  },
   props: ["itemdata", "settingparameter", "id"],
   components: {
     "list-item-block": ListItemBlock
   },
-  updated: function() {},
   computed: {
     renderEle: function() {
       var basearr = [

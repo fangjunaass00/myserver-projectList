@@ -32,23 +32,32 @@
       v-bind:settingparameter="settingParameter"
       @deleteTips="deleteTips"
     ></company-list>
-    <div class="submit" v-show="settingParameter.dataCanSet" @click="getSubmitData">提交</div>
+    <div class="btn-list">
+      <div class="submit" v-show="settingParameter.dataCanSet" @click="addNewCompany">添加新公司项目</div>
+      <div class="submit" v-show="settingParameter.dataCanSet" @click="getSubmitData">提交</div>
+    </div>
+    <new-company v-show="addNewPart"></new-company>
   </div>
 </template>
 
 <script>
 import CompanyBlock from "../components/CompanyBlock";
 import ShowHideEle from "../components/ShowHideEle";
+import AddNewCompany from "../components/AddNewCompany";
+
 var axios = require("axios");
 export default {
   name: "ProjectOuterUI",
   components: {
     "show-hide-ele": ShowHideEle,
-    "company-list": CompanyBlock
+    "company-list": CompanyBlock,
+    "new-company": AddNewCompany
   },
   created: function() {
     this.getJsonData();
     this.changePartShowOrHide(this.clickedPartId);
+    this.$bus.on("close newpart", this.hideNewCompany);
+    this.$bus.on("add new company data", this.addNewCompanyData);
   },
   methods: {
     switchMode() {
@@ -152,7 +161,7 @@ export default {
     addnewTips: function(data) {
       console.log(data);
       var newobj = {
-        id: this.filedata.list.length,
+        id: Date.now() - 1,
         company: data.name,
         createDate: "",
 
@@ -172,6 +181,30 @@ export default {
       };
       this.filedata.list.push(newobj);
     },
+    addNewCompanyData: function(data) {
+      console.log(data);
+      var newobj = {
+        id: Date.now() - 1,
+        company: data.companyname,
+        createDate: data.createDate,
+
+        title: data.title,
+        other: data.other,
+        svnurl: data.svnurl,
+        cdnurl: data.cdnurl,
+        serverdata: {
+          testLink: data.testLink,
+          testServer: data.testServer,
+          testServerPath: data.testServerPath,
+          officalLink: data.officalLink,
+          officalServer: data.officalServer,
+          officalServerPath: data.officalServerPath,
+          statistics: data.statistics
+        }
+      };
+      this.filedata.list.push(newobj);
+      this.addNewPart = false;
+    },
     deleteTips: function(data) {
       var id = data.id;
       var index = 0;
@@ -183,6 +216,12 @@ export default {
           index++;
         }
       });
+    },
+    addNewCompany: function() {
+      this.addNewPart = true;
+    },
+    hideNewCompany: function() {
+      this.addNewPart = false;
     }
   },
   data: function() {
@@ -211,6 +250,7 @@ export default {
         { id: 11, name: "svnurl", show: true }
       ],
       clickedPartId: 1,
+      addNewPart: false,
 
       filedata: {
         title: "update",
@@ -348,9 +388,14 @@ export default {
   width: 100%;
   flex-wrap: wrap;
 }
-
+.btn-list {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
 .submit {
-  width: 100px;
+  min-width: 100px;
   height: 50px;
   text-align: center;
   font-size: 20px;
@@ -359,9 +404,7 @@ export default {
   border-radius: 10px;
   color: #fff;
   margin: 30px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  padding: 0 10px;
 }
 
 .blank {

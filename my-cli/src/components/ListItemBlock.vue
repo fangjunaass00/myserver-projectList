@@ -34,7 +34,11 @@ export default {
   },
   methods: {
     changeEvent(e) {
-      this.$emit("changevalue", {
+      console.log({
+        name: this.itemdata.name,
+        value: e.target.value
+      });
+      this.$bus.emit("changevalue", {
         name: this.itemdata.name,
         value: e.target.value
       });
@@ -43,7 +47,6 @@ export default {
       this.$emit("deleteTips");
     },
     changeShow: function(item) {
-      console.log("changeShow");
       console.log(item);
       this.showList = item;
     },
