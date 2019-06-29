@@ -58,6 +58,7 @@ export default {
     this.$bus.on("create new company", this.addNewCompanyData);
     this.$bus.on("add new projrct", this.addNewProject);
     this.$bus.on("delete tips", this.deleteTips);
+    this.$bus.on("change project item", this.changeProjectValue);
   },
   methods: {
     switchMode() {
@@ -160,7 +161,6 @@ export default {
         });
     },
     addNewProject: function(data) {
-      console.log(data);
       var newobj = {
         id: Date.now() - 1,
         company: data.name,
@@ -170,21 +170,19 @@ export default {
         other: "",
         svnurl: "",
         cdnurl: "",
-        serverdata: {
-          testLink: "",
-          testServer: "",
-          testServerPath: "",
-          officalLink: "",
-          officalServer: "",
-          officalServerPath: "",
-          statistics: ""
-        }
+
+        testLink: "",
+        testServer: "",
+        testServerPath: "",
+        officalLink: "",
+        officalServer: "",
+        officalServerPath: "",
+        statistics: ""
       };
       this.filedata.list.push(newobj);
       this.renderShowList();
     },
     addNewCompanyData: function(data) {
-      console.log(data);
       var newobj = {
         id: Date.now() - 1,
         company: data.companyname,
@@ -194,15 +192,14 @@ export default {
         other: data.other,
         svnurl: data.svnurl,
         cdnurl: data.cdnurl,
-        serverdata: {
-          testLink: data.testLink,
-          testServer: data.testServer,
-          testServerPath: data.testServerPath,
-          officalLink: data.officalLink,
-          officalServer: data.officalServer,
-          officalServerPath: data.officalServerPath,
-          statistics: data.statistics
-        }
+
+        testLink: data.testLink,
+        testServer: data.testServer,
+        testServerPath: data.testServerPath,
+        officalLink: data.officalLink,
+        officalServer: data.officalServer,
+        officalServerPath: data.officalServerPath,
+        statistics: data.statistics
       };
       this.filedata.list.push(newobj);
       this.addNewPart = false;
@@ -224,6 +221,16 @@ export default {
     },
     hideNewCompany: function() {
       this.addNewPart = false;
+    },
+    changeProjectValue: function(data) {
+      console.log(data);
+
+      this.filedata.list.map(function(item) {
+        if (data.id == item.id) {
+          item[data.name] = data.value;
+        }
+      });
+      console.log(this.filedata);
     }
   },
   data: function() {
@@ -334,6 +341,8 @@ export default {
   color: #fff;
   margin: 30px;
   padding: 0 10px;
+  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.5), 0px 3px 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
 .blank {

@@ -89,7 +89,6 @@ export default {
       if (!this.tipsData.companyname) {
         alert("请填写公司名称");
       }
-      console.log(this.tipsData);
       this.$bus.emit("create new company", this.tipsData);
     },
     cancelData: function() {
@@ -113,8 +112,12 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
   z-index: 10;
+  padding: 36px;
+  background: #fff;
+  border-radius: 10px;
 }
 .new-part-fix {
   display: flex;
@@ -123,12 +126,17 @@ export default {
   line-height: 50px;
 }
 .new-part-fix-name {
+  text-align: right;
   min-width: 20%;
-  padding-left: 5%;
+  padding-right: 5%;
 }
 .new-part-fix-input {
   width: 80%;
   padding-right: 5%;
+  height: 90%;
+  /* margin-top: 5px; */
+  border: 1px solid grey;
+  box-shadow: 5px 5px 5px #ceb7b7;
 }
 </style>
 

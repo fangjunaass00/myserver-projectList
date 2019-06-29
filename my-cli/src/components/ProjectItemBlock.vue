@@ -38,10 +38,6 @@ export default {
   },
   methods: {
     changeEvent(e) {
-      console.log({
-        name: this.itemdata.name,
-        value: e.target.value
-      });
       this.$bus.emit("change project item", {
         name: this.itemdata.name,
         value: e.target.value,
@@ -52,20 +48,13 @@ export default {
       this.$bus.emit("delete tips", { id: this.id });
     },
     changeShow: function(item) {
-      console.log("接收事件");
       this.showList = item;
-      console.log(this.showList);
     },
     changeShowById: function(item, id) {
       if (this.id == id) {
         this.showList = item;
       }
     }
-  },
-
-  updated: function() {
-    // this.showList = this.settingparameter.showlist;
-    // console.log("watch" + this.settingparameter.showlist);
   },
   computed: {
     getName: function() {
@@ -87,7 +76,6 @@ export default {
           isInArr = true;
         }
       });
-      console.log(arr, isInArr);
       return isInArr;
     }
   },

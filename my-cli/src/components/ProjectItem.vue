@@ -30,15 +30,7 @@ export default {
   },
 
   name: "ListItem",
-  created: function() {
-    var that = this;
-    this.$bus.on("change project item", function(data) {
-      if (this.id == data.id) {
-        that.itemdata[data.name] = data.value;
-        console.log(that.itemdata);
-      }
-    });
-  },
+  created: function() {},
   props: ["itemdata", "settingparameter", "id"],
   components: {
     "project-item-block": ProjectItemBlock
@@ -57,13 +49,13 @@ export default {
         { name: "other", value: this.itemdata.other, size: 1, showEle: true },
         {
           name: "statistics",
-          value: this.itemdata.serverdata.statistics,
+          value: this.itemdata.statistics,
           size: 1,
           showEle: true
         },
         {
           name: "officalLink",
-          value: this.itemdata.serverdata.officalLink,
+          value: this.itemdata.officalLink,
           size: 2,
           showEle: true
         },
@@ -75,31 +67,31 @@ export default {
         },
         {
           name: "officalServer",
-          value: this.itemdata.serverdata.officalServer,
+          value: this.itemdata.officalServer,
           size: 2,
           showEle: true
         },
         {
           name: "officalServerPath",
-          value: this.itemdata.serverdata.officalServerPath,
+          value: this.itemdata.officalServerPath,
           size: 2,
           showEle: true
         },
         {
           name: "testLink",
-          value: this.itemdata.serverdata.testLink,
+          value: this.itemdata.testLink,
           size: 2,
           showEle: true
         },
         {
           name: "testServer",
-          value: this.itemdata.serverdata.testServer,
+          value: this.itemdata.testServer,
           size: 2,
           showEle: true
         },
         {
           name: "testServerPath",
-          value: this.itemdata.serverdata.testServerPath,
+          value: this.itemdata.testServerPath,
           size: 2,
           showEle: true
         }
